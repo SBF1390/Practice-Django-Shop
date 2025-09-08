@@ -7,3 +7,9 @@ class Member(models.Model):
     Email = models.EmailField(max_length=254)
     def __str__(self):
         return f"{self.FullName} ({self.pk})"
+
+class Products(models.Model):
+    Name = models.CharField(max_length=50)
+    Price = models.IntegerField()
+    Quantity = models.IntegerField()
+    Is_Available = models.BooleanField()
