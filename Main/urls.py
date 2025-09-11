@@ -9,4 +9,5 @@ urlpatterns = [
     path("Cart/<pk>",CartGenericsDetailedView.as_view()),
     path("Member",MemberGenericsApiView.as_view()),
     path("Member/<pk>",MemberGenericsDetailedView.as_view()),
+    path("Member/<pk>/orders",MemberGenericsOrders.as_view()),
 ]

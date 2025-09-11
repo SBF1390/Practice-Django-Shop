@@ -3,6 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
+from rest_framework import mixins
 from rest_framework import status
 from .models import *
 from .serializers import *
@@ -35,3 +36,14 @@ class CartGenericsCApiView(generics.CreateAPIView):
 class CartGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Products.objects.order_by('id').all()
     serializer_class = CartSerializer
+
+class MemberGenericsOrders(generics.ListAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+    def get_queryset(self):
+        user_pk = self.kwargs.get('pk')
+        if user_pk:
+            return self.queryset.filter(id=user_pk)
+        else:
+            return self.queryset.none()
