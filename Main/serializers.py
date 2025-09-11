@@ -9,9 +9,9 @@ class ProductSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['Products','Total_price']
+        fields = ['Products','Total_price','Member','Quantity','Finished']
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = ['FullName','Username','Password','Email','Cart']
+        fields = ['FullName','Username','Password','Email']

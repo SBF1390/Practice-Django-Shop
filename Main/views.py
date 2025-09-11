@@ -15,13 +15,6 @@ class ProductsGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Products.objects.order_by('id').all()
     serializer_class = ProductSerializer
 
-class CartGenericsApiView(generics.ListCreateAPIView):
-    queryset = Products.objects.order_by('id').all()
-    serializer_class = CartSerializer
-
-class CartGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Products.objects.order_by('id').all()
-    serializer_class = CartSerializer
 
 class MemberGenericsApiView(generics.ListCreateAPIView):
     queryset = Products.objects.order_by('id').all()
@@ -29,3 +22,16 @@ class MemberGenericsApiView(generics.ListCreateAPIView):
 class MemberGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Products.objects.order_by('id').all()
     serializer_class = MemberSerializer
+class CartGenericsCApiView(generics.CreateAPIView):
+    queryset = Products.objects.order_by('id').all()
+    serializer_class = CartSerializer
+
+    def perform_create(self, serializer):
+        cart_instance = serializer.save()
+        Products = cart_instance.Products
+        Products.Quantity -= cart_instance.Quantity
+        Products.save()
+
+class CartGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Products.objects.order_by('id').all()
+    serializer_class = CartSerializer

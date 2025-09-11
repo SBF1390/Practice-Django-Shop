@@ -22,4 +22,5 @@ class Cart(models.Model):
     Products = models.ManyToManyField(Products)
     Total_price = models.IntegerField()
     Member = models.ForeignKey(Member,on_delete=models.CASCADE, null=True)
-    Finished = models.BooleanField()
+    Quantity = models.IntegerField(default=1)
+    Finished = models.BooleanField(default=False)
