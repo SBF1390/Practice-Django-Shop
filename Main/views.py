@@ -9,23 +9,32 @@ from .models import *
 from .serializers import *
 from datetime import date
 
+
 class ProductsGenericsApiView(generics.ListCreateAPIView):
-    queryset = Products.objects.order_by('id').all()
+    queryset = Products.objects.order_by("id").all()
     serializer_class = ProductSerializer
+
 
 class ProductsGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Products.objects.order_by('id').all()
+    queryset = Products.objects.order_by("id").all()
     serializer_class = ProductSerializer
 
+class ProductsMostSold(generics.ListAPIView):
+    queryset = Products.objects.order_by("-Sold").all()
+    serializer_class = ProductSerializer
 
 class MemberGenericsApiView(generics.ListCreateAPIView):
-    queryset = Products.objects.order_by('id').all()
+    queryset = Products.objects.order_by("id").all()
     serializer_class = MemberSerializer
+
+
 class MemberGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Products.objects.order_by('id').all()
+    queryset = Products.objects.order_by("id").all()
     serializer_class = MemberSerializer
+
+
 class CartGenericsCApiView(generics.CreateAPIView):
-    queryset = Products.objects.order_by('id').all()
+    queryset = Products.objects.order_by("id").all()
     serializer_class = CartSerializer
 
     def perform_create(self, serializer):
@@ -34,22 +43,25 @@ class CartGenericsCApiView(generics.CreateAPIView):
         Products.Quantity -= cart_instance.Quantity
         Products.save()
 
+
 class CartGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Products.objects.order_by('id').all()
+    queryset = Products.objects.order_by("id").all()
     serializer_class = CartSerializer
+
 
 class CartTodaySearch(generics.ListAPIView):
     queryset = Cart.objects.all()
 
     def get_queryset(self):
-        return Cart.objects.filter(Date = date.today)
-    
+        return Cart.objects.filter(Date=date.today)
+
+
 class MemberGenericsOrders(generics.ListAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
     def get_queryset(self):
-        user_pk = self.kwargs.get('pk')
+        user_pk = self.kwargs.get("pk")
         if user_pk:
             return self.queryset.filter(id=user_pk)
         else:
