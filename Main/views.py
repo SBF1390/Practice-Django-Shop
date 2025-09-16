@@ -3,8 +3,6 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
-from rest_framework import mixins
-from rest_framework import status
 from .models import *
 from .serializers import *
 from datetime import date
@@ -22,6 +20,20 @@ class ProductsGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
 class ProductsMostSold(generics.ListAPIView):
     queryset = Products.objects.order_by("-Sold").all()
     serializer_class = ProductSerializer
+
+class ProductsSearch(generics.ListAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        return Products.objects.filter(Name = self.kwargs.get("s"))
+
+class ProductsOrderby(generics.ListAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        return Products.objects.order_by('Price')
 
 class MemberGenericsApiView(generics.ListCreateAPIView):
     queryset = Products.objects.order_by("id").all()
@@ -41,6 +53,7 @@ class CartGenericsCApiView(generics.CreateAPIView):
         cart_instance = serializer.save()
         Products = cart_instance.Products
         Products.Quantity -= cart_instance.Quantity
+        Products.Sold -= 1
         Products.save()
 
 
