@@ -7,6 +7,7 @@ urlpatterns = [
     path("Products/<pk>",ProductsGenericsDetailedView.as_view()),
     path("Cart/Create",CartGenericsCApiView.as_view()),
     path("Cart/<pk>",CartGenericsDetailedView.as_view()),
+    path("Cart/Today",CartTodaySearch.as_view()),
     path("Member",MemberGenericsApiView.as_view()),
     path("Member/<pk>",MemberGenericsDetailedView.as_view()),
     path("Member/<pk>/orders",MemberGenericsOrders.as_view()),

@@ -7,6 +7,7 @@ from rest_framework import mixins
 from rest_framework import status
 from .models import *
 from .serializers import *
+from datetime import date
 
 class ProductsGenericsApiView(generics.ListCreateAPIView):
     queryset = Products.objects.order_by('id').all()
@@ -37,6 +38,12 @@ class CartGenericsDetailedView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Products.objects.order_by('id').all()
     serializer_class = CartSerializer
 
+class CartTodaySearch(generics.ListAPIView):
+    queryset = Cart.objects.all()
+
+    def get_queryset(self):
+        return Cart.objects.filter(Date = date.today)
+    
 class MemberGenericsOrders(generics.ListAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer

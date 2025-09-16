@@ -23,4 +23,5 @@ class Cart(models.Model):
     Total_price = models.IntegerField()
     Member = models.ForeignKey(Member,on_delete=models.CASCADE, null=True)
     Quantity = models.IntegerField(default=1)
+    Date = models.DateField(auto_now=True)
     Finished = models.BooleanField(default=False)
